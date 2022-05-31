@@ -147,6 +147,22 @@ class Losses(object):
         return loss
 
     @staticmethod
+    def depth_loss(gt_depth, render_depth, depth_mask):
+        front_gt_depth = gt_depth[0]
+        front_render_depth = render_depth[0]
+        front_depth_mask = depth_mask[0]
+
+        front_err = tf.square(front_gt_depth - front_render_depth)
+        front_err = tf.clip_by_value(front_err, 0, 16)
+        front_sum_err = tf.reduce_sum(front_err * front_depth_mask)
+        front_mean_err = tf.div(front_sum_err, tf.reduce_sum(front_depth_mask))
+        loss = front_mean_err 
+
+
+        return loss
+
+
+    @staticmethod
     def weighted_landmark3d_loss(gt_landmark, pred_landmark):
         gt_landmark = tf.where(
             tf.logical_or(tf.is_nan(gt_landmark), tf.is_nan(pred_landmark)),

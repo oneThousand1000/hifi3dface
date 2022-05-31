@@ -305,3 +305,5 @@ def render_img_in_different_pose(
         render_img_in_fake_pose_L,
         render_img_in_fake_pose_R,
     )
+
+
