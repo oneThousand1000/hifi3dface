@@ -1,3 +1,95 @@
+# Single-RGBD version of hifi3dface
+
+This is **a personal Single-RGBD version** of the official [tencent-ailab/hifi3dface](https://github.com/tencent-ailab/hifi3dface).
+
+**1.2 Configuration:**
+
+Modify **run_rgbd.sh** as following:
+
+1. Line 6: define the path to **3DMM** as where you download the 3DMM model. 
+
+   ```bash
+   basic_path=$(pwd)/3DMM/files/;
+   ```
+
+2. Line 7: define the path to **resources** as where you download the data. 
+
+   ```bash
+   resources_path=$(pwd)/resources/;
+   ```
+
+3. Line 24: define the path to **test data**. If you capture your own data, please specify the path to the single mid portrait and depth image.
+
+   <div>
+   <div align=left><img src="figures/single_data.jpg" alt="RGBD_example" width=80%>
+   </div>
+
+   ```bash
+   ROOT_DIR=$(pwd)/test_data/RGBD/test_single/;
+   ```
+
+4. Line 121-136: configure optimization parameters.
+
+   ```bash
+   log_step=10
+   learning_rate=0.05
+   lr_decay_step=10
+   lr_decay_rate=0.9
+   photo_weight=100
+   gray_photo_weight=80
+   reg_shape_weight=0.4
+   reg_tex_weight=0.0001
+   depth_weight=1000
+   id_weight=1.8
+   real_86pt_lmk3d_weight=0.01
+   lmk_struct_weight=0
+   train_step=100
+   is_fixed_pose="False"
+   is_add_head_mirrow="False" #  True: output symmetrical head completion result
+   is_add_head_male="True" #  True: complete head with a male template
+   ```
+
+**1.3 Run:**
+
+Please run the follow command to generate the results.
+
+```bash
+bash run_opt_signle_rgbd.sh
+```
+
+**1.4 Results:**
+
+The produced results will be saved in the **results** floder in data path, including: 
+
+    - head.obj: the final mesh file
+    - albedo.png: the final albedo map file
+    - normal.png: the final normal map file
+    - test.mtl: a material description file for simple rendering in meshlab
+
+original multi-rgbd results:
+
+<div>
+<div align=left><img src="figures/multi-rgbd.jpg" alt="teaser" width=80%>
+</div>
+
+single-rgbd results:
+
+<div>
+<div align=left><img src="figures/single-rgbd.jpg" alt="teaser" width=80%>
+</div>
+
+
+
+Fig11 and Fig12 in paper:
+
+<div>
+<div align=left><img src="figures/fig11-12.jpg" alt="teaser" width=100%>
+</div>
+
+
+
+# **original README：**
+
 # High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies (ACM Transactions on Graphics 2021)
 
 
@@ -222,7 +314,7 @@ Note that if you run the script with more than one images, only the first image 
 
 
 **2.4 Results:**
- 
+
 The produced results will be saved in the **results** floder in data path, including: 
 
     - head.obj: the final mesh file
